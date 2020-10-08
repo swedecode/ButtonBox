@@ -1,4 +1,4 @@
-// Uses Ben Buxton's rotary encoder work!
+// Uses Ben Buxton's rotary encoder work!: https://github.com/buxtronix/arduino/tree/master/libraries/Rotary
 
 // Grab all libraries that we need.
 #include <Keypad.h>
