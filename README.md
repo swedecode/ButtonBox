@@ -39,4 +39,5 @@ Have a look at the sketch and get in touch if you have feedback or thoughts!
 
 This is what the wiring looked like for me, doing it with the MCP23017, encoders and all.
 The MCP23017 requires a 10k resistor on the reset pin to VCC, and I've used 0x0 as the address for the MCP since I'm only using one.
+
 ![](img/Buttonbox.png)
