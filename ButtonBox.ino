@@ -9,21 +9,19 @@
 // Allows us to use 'mcp' for calls to the MCP23017 we are using.
 Adafruit_MCP23017 mcp;
 
-// Some definitions: We're using 5 rotaries (with buttons), and 24 stand-alone buttons.
+// Some definitions: We're using 7 rotaries (with buttons), and 12 stand-alone buttons.
 #define ENABLE_PULLUPS
-#define NUMROTARIES 5
-#define NUMBUTTONS 24
+#define NUMROTARIES 7
+#define NUMBUTTONS 19
 // We have a button matrix to support the 24 buttons: 5 rows, 5 columns
-#define NUMROWS 5
-#define NUMCOLS 5
+#define NUMROWS 3
+#define NUMCOLS 4
 
 // This is a matrix that maps our buttons out for use in the keypad later.
 byte buttons[NUMROWS][NUMCOLS] = {
-  {0,1,2,3,4},
-  {5,6,7,8,9},
-  {10,11,12,13,14},
-  {15,16,17,18,19},
-  {20,21,22,23}
+  {0,1,2,3}
+  {4,5,6,7},
+  {8,9,10,11}
 };
 
 // we have two pins + gnd for each rotary encoder. 
@@ -36,23 +34,39 @@ struct rotariesdef {
   int ccwFn;
   int cwFn;
   volatile unsigned char state;
-  int btnPin;
-  int btnFn;
-  int btnState;
 };
 
 // These are mcp pins, since the rotary encoders are all on the MCP.
 // Each row represents one rotary encoder
 rotariesdef rotaries[NUMROTARIES] {
-  {7,6,29,30,0,9,24,0},
-  {5,4,31,32,0,10,25,0},
-  {3,2,33,34,0,11,26,0},
-  {1,0,35,36,0,12,27,0},
-  {15,14,37,38,0,13,28,0}
+  {3,4,12,13},
+  {5,6,14,15},
+  {7,8,16,17},
+  {9,10,18,19},
+  {11,12,20,21}
+  {13,14,22,23}
+  {15,16,24,25}
 };
 
 // We need to be able to hold the previous state.
 int rotaryBtnState = 0;
+
+struct rotaryButtonsdef {
+  byte btnPin;
+  int btnFn;
+  int prevBtnState;
+}
+
+rotaryButtonsdef rotaryButtons[NUMROTARIES] {
+  {1,26,0}; 
+  {4,27,0}; 
+  {5,28,0}; 
+  {6,29,0}; 
+  {7,30,0}; 
+  {8,31,0}; 
+  {9,32,0}; 
+}
+
 
 #define DIR_CCW 0x10
 #define DIR_CW 0x20
@@ -83,10 +97,10 @@ const unsigned char ttable[7][4] = {
 };
 
 // The pins that are used for the rows
-byte rowPins[NUMROWS] = {4,5,6,8,9};
+byte rowPins[NUMROWS] = {14,15,16};
 
 // The pins that are used for the columns
-byte colPins[NUMCOLS] = {10,14,15,16,18}; 
+byte colPins[NUMCOLS] = {18,19,21,21}; 
 
 Keypad buttbx = Keypad( makeKeymap(buttons), rowPins, colPins, NUMROWS, NUMCOLS); 
 
@@ -109,7 +123,18 @@ void loop() {
   CheckAllEncoders();
 
   CheckAllButtons();
+  
+  CheckSingleButtons();
 
+}
+
+void CheckSingleButtons(void) {
+  for (int i=0; i<NUMROTARIES; i++){
+    int btnState
+    btnState = digitalRead(RotaryButtons[i]) 
+      
+    if btnState != prevBtnState
+  }
 }
 
 
@@ -172,31 +197,6 @@ void CheckAllEncoders(void) {
     if (result == DIR_CW) {
       Joystick.setButton(rotaries[i].cwFn, 1); delay(50); Joystick.setButton(rotaries[i].cwFn, 0);
     } 
-
-    // If the encoder did not turn, we should check if the rotary button was pressed.
-    else {
-      rotaryBtnState = mcp.digitalRead(rotaries[i].btnPin);
-      // If the button has been pressed, the rotaryBtnState will be LOW. 
-      while (rotaryBtnState == LOW) {
-        // If the rotaries[i] value is 0, it means that it's a new press, so we need to set it to on (1).
-        if (rotaries[i].btnState == 0) {
-          Joystick.setButton(rotaries[i].btnFn, 1);
-          rotaries[i].btnState = 1;
-        }
-        // Now we read the button state again, which allows the button to be continuously checked for being pressed.
-        // This means that it will only read this encoder button and nothing else meanwhile it is pressed, though!
-        rotaryBtnState = mcp.digitalRead(rotaries[i].btnPin);
-        
-      }
-      // If the button has been released, and the btnState value was set to 1, 
-      // it means it was released and we need to do something: turn it off (set to 0).
-      if (rotaryBtnState == HIGH && rotaries[i].btnState == 1) {
-          Joystick.setButton(rotaries[i].btnChar, 0);
-          rotaries[i].btnState = 0;
-      }
-      
     }
-    
-    
   }
 }
