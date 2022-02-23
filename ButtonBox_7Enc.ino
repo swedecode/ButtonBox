@@ -178,11 +178,9 @@ void rotary_init() {
     // We initialise all pins
     mcp.pinMode(rotaries[i].pin1, INPUT);
     mcp.pinMode(rotaries[i].pin2, INPUT);
-    mcp.pinMode(rotaries[i].btnPin, INPUT);
     // And set them to be pullups
     mcp.digitalWrite(rotaries[i].pin1, HIGH);
     mcp.digitalWrite(rotaries[i].pin2, HIGH);
-    mcp.digitalWrite(rotaries[i].btnPin, HIGH);
     }
 }
 
