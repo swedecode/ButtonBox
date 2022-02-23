@@ -13,15 +13,16 @@ Adafruit_MCP23017 mcp;
 #define ENABLE_PULLUPS
 #define NUMROTARIES 7
 #define NUMBUTTONS 19
-// We have a button matrix to support the 24 buttons: 5 rows, 5 columns
-#define NUMROWS 3
+// We have a button matrix to support the 14 buttons: 4 rows, 4 columns
+#define NUMROWS 4
 #define NUMCOLS 4
 
 // This is a matrix that maps our buttons out for use in the keypad later.
 byte buttons[NUMROWS][NUMCOLS] = {
   {0,1,2,3}
   {4,5,6,7},
-  {8,9,10,11}
+  {8,9,10,11},
+  {12,13,99,99}
 };
 
 // we have two pins + gnd for each rotary encoder. 
@@ -39,12 +40,12 @@ struct rotariesdef {
 // These are mcp pins, since the rotary encoders are all on the MCP.
 // Each row represents one rotary encoder
 rotariesdef rotaries[NUMROTARIES] {
-  {1,8,12,13},
+  {1,8,26,27},
   {2,9,14,15},
   {3,10,16,17},
   {4,11,18,19},
-  {5,12,20,21}
-  {6,13,22,23}
+  {5,12,20,21},
+  {6,13,22,23},
   {7,14,24,25}
 };
 
@@ -59,13 +60,13 @@ struct rotaryButtonsdef {
 }
 
 rotaryButtonsdef rotaryButtons[NUMROTARIES] {
-  {1,26,0,0}; 
-  {4,27,0,0}; 
-  {5,28,0,0}; 
-  {6,29,0,0}; 
-  {7,30,0,0}; 
-  {8,31,0,0}; 
-  {9,32,0,0}; 
+  {1,33,0,0}, 
+  {4,34,0,0}, 
+  {5,28,0,0}, 
+  {6,29,0,0}, 
+  {7,30,0,0}, 
+  {8,31,0,0}, 
+  {9,32,0,0} 
 }
 
 
@@ -98,7 +99,7 @@ const unsigned char ttable[7][4] = {
 };
 
 // The pins that are used for the rows
-byte rowPins[NUMROWS] = {14,15,16};
+byte rowPins[NUMROWS] = {14,15,16,10};
 
 // The pins that are used for the columns
 byte colPins[NUMCOLS] = {18,19,21,21}; 
