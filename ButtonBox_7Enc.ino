@@ -102,7 +102,7 @@ const unsigned char ttable[7][4] = {
 byte rowPins[NUMROWS] = {14,15,16,10};
 
 // The pins that are used for the columns
-byte colPins[NUMCOLS] = {18,19,21,21}; 
+byte colPins[NUMCOLS] = {18,19,20,21}; 
 
 Keypad buttbx = Keypad( makeKeymap(buttons), rowPins, colPins, NUMROWS, NUMCOLS); 
 
