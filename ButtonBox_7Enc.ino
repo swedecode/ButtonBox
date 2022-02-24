@@ -46,13 +46,13 @@ struct rotariesdef {
 // These are mcp pins, since the rotary encoders are all on the MCP.
 // Each row represents one rotary encoder
 rotariesdef rotaries[NUMROTARIES] {
-  {1,8,26,27},
-  {2,9,14,15},
-  {3,10,16,17},
-  {4,11,18,19},
-  {5,12,20,21},
-  {6,13,22,23},
-  {7,14,24,25}
+  {0,8,26,27},
+  {1,9,14,15},
+  {2,10,16,17},
+  {3,11,18,19},
+  {4,12,20,21},
+  {5,13,22,23},
+  {6,14,24,25}
 };
 
 // We need to be able to hold the previous state.
