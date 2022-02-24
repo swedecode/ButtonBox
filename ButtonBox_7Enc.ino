@@ -1,4 +1,10 @@
 // Uses Ben Buxton's rotary encoder work!: https://github.com/buxtronix/arduino/tree/master/libraries/Rotary
+// 
+
+//  known dependencies on the following libraries
+//  -------
+//  BusIO: 1.11.1
+//  Adafruit MCP23017 2.0.2
 
 // Grab all libraries that we need.
 #include <Keypad.h>
@@ -7,7 +13,7 @@
 #include <Adafruit_MCP23X17.h>
 
 // Allows us to use 'mcp' for calls to the MCP23017 we are using.
-Adafruit_MCP23017 mcp;
+Adafruit_MCP23X17 mcp;
 
 // Some definitions: We're using 7 rotaries (with buttons), and 12 stand-alone buttons.
 #define ENABLE_PULLUPS
@@ -114,7 +120,7 @@ String msg;
 
 void setup() {
   // Initiate the mcp and joystick packages, and run rotary_init().
-  mcp.begin();
+  mcp.begin_I2C();
   Joystick.begin();
   rotary_init();
 }
@@ -132,14 +138,14 @@ void loop() {
 void CheckSingleButtons(void) {
   for (int i=0; i<NUMROTARIES; i++){
     int btnState;
-    btnState = digitalRead(RotaryButtons[i].btnPin);
+    btnState = digitalRead(rotaryButtons[i].btnPin);
       
-    if btnState == 1 && rotaryButtons[i].prevBtnState == 0 {
+    if (btnState == 1 && rotaryButtons[i].prevBtnState == 0) {
       rotaryButtons[i].prevBtnState = 1;
       rotaryButtons[i].prevChange = millis();
       Joystick.setButton(rotaryButtons[i].btnFn, 1);
     }
-    if btnState == 0 && rotaryButtons[i].prevBtnState == 1 && millis() >= (rotaryButtons[i].prevChange + 50){
+    if (btnState == 0 && rotaryButtons[i].prevBtnState == 1 && millis() >= (rotaryButtons[i].prevChange + 50)){
       rotaryButtons[i].prevBtnState = 0; 
       Joystick.setButton(rotaryButtons[i].btnFn, 0);
     }
@@ -203,7 +209,6 @@ void CheckAllEncoders(void) {
     };
     if (result == DIR_CW) {
       Joystick.setButton(rotaries[i].cwFn, 1); delay(50); Joystick.setButton(rotaries[i].cwFn, 0);
-    } 
+    };
     }
-  }
 }
