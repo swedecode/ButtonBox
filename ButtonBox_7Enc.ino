@@ -189,11 +189,8 @@ void CheckAllButtons(void) {
 void rotary_init() {
   for (int i=0;i<NUMROTARIES;i++) {
     // We initialise all pins
-    mcp.pinMode(rotaries[i].pin1, INPUT);
-    mcp.pinMode(rotaries[i].pin2, INPUT);
-    // And set them to be pullups
-    mcp.digitalWrite(rotaries[i].pin1, HIGH);
-    mcp.digitalWrite(rotaries[i].pin2, HIGH);
+    mcp.pinMode(rotaries[i].pin1, INPUT_PULLUP);
+    mcp.pinMode(rotaries[i].pin2, INPUT_PULLUP);
     }
 }
 
