@@ -126,7 +126,7 @@ void setup() {
 
   // Initialise the direct buttons as input pullup pins
   for (int i=0; i<NUMROTARIES; i++){
-   pinmode(rotaryButtons[i].btnPin,INPUT_PULLUP);
+   pinMode(rotaryButtons[i].btnPin,INPUT_PULLUP);
   }
   
 }
