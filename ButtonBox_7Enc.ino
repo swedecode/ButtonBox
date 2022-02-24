@@ -123,6 +123,7 @@ void setup() {
   mcp.begin_I2C();
   Joystick.begin();
   rotary_init();
+  Serial.begin(115200);
 
   // Initialise the direct buttons as input pullup pins
   for (int i=0; i<NUMROTARIES; i++){
@@ -211,9 +212,11 @@ void CheckAllEncoders(void) {
     // If the rotation was clockwise, do the same thing for cwFn.
     
     if (result == DIR_CCW) {
+      Serial.println(rotaries[i].ccwFn);
       Joystick.setButton(rotaries[i].ccwFn, 1); delay(50); Joystick.setButton(rotaries[i].ccwFn, 0);
     };
     if (result == DIR_CW) {
+      Serial.println(rotaries[i].cwFn);
       Joystick.setButton(rotaries[i].cwFn, 1); delay(50); Joystick.setButton(rotaries[i].cwFn, 0);
     };
     }
