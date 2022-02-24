@@ -146,13 +146,13 @@ void CheckSingleButtons(void) {
     int btnState;
     btnState = digitalRead(rotaryButtons[i].btnPin);
       
-    if (btnState == 1 && rotaryButtons[i].prevBtnState == 0) {
-      rotaryButtons[i].prevBtnState = 1;
+    if (btnState == 0 && rotaryButtons[i].prevBtnState == 1) {
+      rotaryButtons[i].prevBtnState = btnState;
       rotaryButtons[i].prevChange = millis();
       Joystick.setButton(rotaryButtons[i].btnFn, 1);
     }
-    if (btnState == 0 && rotaryButtons[i].prevBtnState == 1 && millis() >= (rotaryButtons[i].prevChange + 50)){
-      rotaryButtons[i].prevBtnState = 0; 
+    if (btnState == 1 && rotaryButtons[i].prevBtnState == 0 && millis() >= (rotaryButtons[i].prevChange + 50)){
+      rotaryButtons[i].prevBtnState = btnState; 
       Joystick.setButton(rotaryButtons[i].btnFn, 0);
     }
   }
