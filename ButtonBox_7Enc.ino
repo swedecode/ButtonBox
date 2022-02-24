@@ -123,6 +123,12 @@ void setup() {
   mcp.begin_I2C();
   Joystick.begin();
   rotary_init();
+
+  // Initialise the direct buttons as input pullup pins
+  for (int i=0; i<NUMROTARIES; i++){
+   pinmode(rotaryButtons[i].btnPin,INPUT_PULLUP);
+  }
+  
 }
 
 void loop() { 
