@@ -4,7 +4,7 @@
 #include <Keypad.h>
 #include <Joystick.h>
 #include <Wire.h>
-#include <Adafruit_MCP23017.h>
+#include <Adafruit_MCP23X17.h>
 
 // Allows us to use 'mcp' for calls to the MCP23017 we are using.
 Adafruit_MCP23017 mcp;
@@ -19,7 +19,7 @@ Adafruit_MCP23017 mcp;
 
 // This is a matrix that maps our buttons out for use in the keypad later.
 byte buttons[NUMROWS][NUMCOLS] = {
-  {0,1,2,3}
+  {0,1,2,3},
   {4,5,6,7},
   {8,9,10,11},
   {12,13,99,99}
@@ -57,7 +57,7 @@ struct rotaryButtonsdef {
   int btnFn;
   int prevBtnState;
   long prevChange;
-}
+};
 
 rotaryButtonsdef rotaryButtons[NUMROTARIES] {
   {1,33,0,0}, 
@@ -67,8 +67,7 @@ rotaryButtonsdef rotaryButtons[NUMROTARIES] {
   {7,30,0,0}, 
   {8,31,0,0}, 
   {9,32,0,0} 
-}
-
+};
 
 #define DIR_CCW 0x10
 #define DIR_CW 0x20
