@@ -151,6 +151,7 @@ void CheckSingleButtons(void) {
       rotaryButtons[i].prevBtnState = btnState;
       rotaryButtons[i].prevChange = millis();
       Joystick.setButton(rotaryButtons[i].btnFn, 1);
+      Serial.println(rotaryButtons[i].btnFn);
     }
     if (btnState == 1 && rotaryButtons[i].prevBtnState == 0 && millis() >= (rotaryButtons[i].prevChange + 50)){
       rotaryButtons[i].prevBtnState = btnState; 
